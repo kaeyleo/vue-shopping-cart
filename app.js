@@ -107,7 +107,8 @@ new Vue({
             name: 'Beats EP头戴式耳机',
             price: 558,
             type: 4,
-            quantity: 2,
+            quantity: 1,
+            subtotal: '558.0',
             stock: 128,
             sales: 1872,
             img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
@@ -196,10 +197,14 @@ new Vue({
                 // 购物车商品初始化数量为1
                 this.cart.push(goods);
                 this.$set(this.cart[length], 'quantity', 1);
+                this.$set(this.cart[length], 'subtotal', goods.price.toFixed(1));
+                console.log(this.len);
                 return;
             }
+            var alreadyGoods = this.cart[alreadyIndex];
             // 如果存在，数量加1
-            this.$set(this.cart[alreadyIndex], 'quantity', ++this.cart[alreadyIndex].quantity);
+            this.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
+            this.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
         }
     }
 })
