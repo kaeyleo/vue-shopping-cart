@@ -206,5 +206,15 @@ new Vue({
             this.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
             this.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
         }
+    },
+    computed: {
+        totalPrice: function() {
+            var num = 0;
+            for (var i in this.cart) {
+                var item = this.cart[i];
+                num += parseFloat(item.subtotal);
+            }
+            return num;
+        }
     }
 })
