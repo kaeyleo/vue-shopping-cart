@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue shopping cart</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="g-panel" id="app">
+        <div class="device">
+            <header><span class="header-title">商品列表</span></header>
+            <div class="page">
+                <div class="tab-wrap">
+                    <ul class="cate-tab">
+                        <li class="cate" v-bind:class="{'tab-active': cate_index === index}" v-for="(item, index) in cate" @click="toggleCate(index)">{{ item.des }}</li>
+                    </ul>
+                </div>
+                <ul class="filter-bar">
+                    <li class="filter-opt" v-bind:class="{ 'filter-active': filter_index === 0 }" @click="sortBy(0)">综合排序</li>
+                    <li class="filter-opt" v-bind:class="{ 'filter-active': filter_index === 1 }" @click="sortBy(1)">销量优先</li>
+                    <li class="filter-opt filter-price" v-bind:class="[filter_index === 2 ? 'filter-active' : '', price_isAsc ? 'price-down' : 'price-up']"
+                        @click="sortBy(2)">价格</li>
+                </ul>
+                <ul class="goods-list">
+                    <li class="goods-item" v-for="(item, index) in list">
+                        <div class="goods-img">
+                            <img v-bind:src="item.img" v-bind:alt="item.name">
+                        </div>
+                        <div class="goods-info">
+                            <p class="goods-title">{{ item.name }}</p>
+                            <div class="goods-price">
+                                <span>¥<b>{{ item.price }}</b></span>
+                            </div>
+                            <span class="des">{{ item.sales }}人付款</span>
+                            <span class="save" @click="addToCart(item)">+</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="device">
+            <header>
+                <span class="header-title">购物清单</span>
+                <span class="header-edit">编辑</span>
+            </header>
+            <div class="page">
+                <ul class="goods-list cart-list">
+                    <li class="goods-item" v-for="(item, index) in cart">
+                        <div class="item-selector">
+                            <div class="icon-selector">
+                                <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2922"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
+                                    <defs>
+                                        <style type="text/css"></style>
+                                    </defs>
+                                    <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
+                                        fill="#ffffff" p-id="2923"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="goods-img">
+                            <img v-bind:src="item.img" v-bind:alt="item.name">
+                        </div>
+                        <div class="goods-info">
+                            <p class="goods-title">{{ item.name }}</p>
+                            <div class="goods-price">
+                                <span>¥<b>{{ item.price }}</b></span>
+                            </div>
+                            <span class="des">库存{{ item.stock }}件</span>
+                            <div class="goods-num">
+                                <div class="num-btn">+</div>
+                                <div class="show-num">{{ item.quantity }}</div>
+                                <div class="num-btn">-</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="action-bar">
+                <!--del-box-->
+                <div class="g-selector">
+                    <div class="item-selector">
+                        <div class="icon-selector">
+                            <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2922"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
+                                <defs>
+                                    <style type="text/css"></style>
+                                </defs>
+                                <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
+                                    fill="#ffffff" p-id="2923"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span>全选</span>
+                </div>
+                <div class="buy-btn">去结算(3)</div>
+                <div class="total">合计：<span>¥<b>12617</b></span></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.4.2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
