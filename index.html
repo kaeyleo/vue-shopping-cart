@@ -52,9 +52,6 @@
                         <div class="item-selector">
                             <div class="icon-selector" v-bind:class="{'selector-active': item.checked}" @click="selectGoods(item)">
                                 <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2922" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
-                                    <defs>
-                                        <style type="text/css"></style>
-                                    </defs>
                                     <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
                                         fill="#ffffff" p-id="2923"></path>
                                 </svg>
@@ -70,23 +67,20 @@
                             </div>
                             <span class="des">库存{{ item.stock }}件</span>
                             <div class="goods-num">
-                                <div class="num-btn" @click="changeQty(true, index)">+</div>
+                                <div class="num-btn" @click="changeQty(true, item)">+</div>
                                 <div class="show-num">{{ item.quantity }}</div>
-                                <div class="num-btn" @click="changeQty(false, index)">-</div>
+                                <div class="num-btn" @click="changeQty(false, item)">-</div>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="action-bar">
-                <!--del-box-->
-                <div class="g-selector">
+                <!-- del-box -->
+                <div class="g-selector" @click="checkAll">
                     <div class="item-selector">
-                        <div class="icon-selector">
+                        <div class="icon-selector" v-bind:class="{'selector-active': checkAllFlag}">
                             <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2922" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
-                                <defs>
-                                    <style type="text/css"></style>
-                                </defs>
                                 <path d="M908.288 127.488l-537.6 537.6-254.976-254.976L0 525.824l254.976 254.976 115.712 115.712L486.4 780.8l537.6-537.6z"
                                     fill="#ffffff" p-id="2923"></path>
                             </svg>

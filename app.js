@@ -251,17 +251,17 @@ var Cart = new Vue({
          * @param {Boolean} isAdd 是否增加
          * @param {Number} index 商品下标
          */
-        changeQty: function(isAdd, index) {
-            var num = this.cart[index].quantity,
-                stock = this.cart[index].stock;
+        changeQty: function(isAdd, item) {
+            var num = item.quantity,
+                stock = item.stock;
 
             if (isAdd && num < stock) {
-                this.$set(this.cart[index], 'quantity', ++this.cart[index].quantity);
+                this.$set(item, 'quantity', ++num);
             } else if (!isAdd && num > 1) {
-                this.$set(this.cart[index], 'quantity', --this.cart[index].quantity);
+                this.$set(item, 'quantity', --num);
             }
 
-            this.$set(this.cart[index], 'subtotal', (this.cart[index].price * this.cart[index].quantity).toFixed(1));
+            this.$set(item, 'subtotal', (item.price * num).toFixed(1));
         },
 
         /**
@@ -274,17 +274,15 @@ var Cart = new Vue({
             } else {
                 item.checked = !item.checked
             }
-            console.log(item);
         }
 
     },
     computed: {
         totalPrice: function() {
             var num = 0;
-            for (var i in this.cart) {
-                var item = this.cart[i];
-                num += parseFloat(item.subtotal);
-            }
+            this.cart.forEach(function(item) {
+                item.checked && (num += parseFloat(item.subtotal));
+            });
             return num;
         }
     }
