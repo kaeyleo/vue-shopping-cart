@@ -230,6 +230,7 @@ var List = new Vue({
 var Cart = new Vue({
     el: '#page-cart',
     data: {
+        checkAllFlag: false,
         cart: [{
             id: 1001,
             name: 'Beats EP头戴式耳机',
@@ -239,6 +240,7 @@ var Cart = new Vue({
             subtotal: 558,
             stock: 128,
             sales: 1872,
+            checked: true,
             img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
         }]
     },
@@ -246,6 +248,8 @@ var Cart = new Vue({
 
         /**
          * @method 增减单品数量
+         * @param {Boolean} isAdd 是否增加
+         * @param {Number} index 商品下标
          */
         changeQty: function(isAdd, index) {
             var num = this.cart[index].quantity,
@@ -258,7 +262,21 @@ var Cart = new Vue({
             }
 
             this.$set(this.cart[index], 'subtotal', (this.cart[index].price * this.cart[index].quantity).toFixed(1));
+        },
+
+        /**
+         * @method 选择商品
+         * @param {Object} item 商品对象
+         */
+        selectGoods: function(item) {
+            if (typeof item.checked === 'undefined') {
+                this.$set(item, 'checked', true)
+            } else {
+                item.checked = !item.checked
+            }
+            console.log(item);
         }
+
     },
     computed: {
         totalPrice: function() {

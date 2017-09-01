@@ -50,7 +50,7 @@
                 <ul class="goods-list cart-list">
                     <li class="goods-item" v-for="(item, index) in cart">
                         <div class="item-selector">
-                            <div class="icon-selector">
+                            <div class="icon-selector" v-bind:class="{'selector-active': item.checked}" @click="selectGoods(item)">
                                 <svg t="1504061791962" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2922" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12">
                                     <defs>
                                         <style type="text/css"></style>
