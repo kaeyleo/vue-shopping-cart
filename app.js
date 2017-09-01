@@ -206,19 +206,24 @@ var List = new Vue({
             var alreadyIndex = Cart.cart.findIndex(function(item, index) {
                 return item.id === goods.id;
             });
-            // 如果不存在则添加元素
+
+            // 如果不存在则添加
             if (alreadyIndex === -1) {
                 var cartIndex = Cart.cart.length;
                 // 购物车商品初始化数量为1
                 Cart.cart.push(goods);
                 Cart.$set(Cart.cart[cartIndex], 'quantity', 1);
                 Cart.$set(Cart.cart[cartIndex], 'subtotal', goods.price.toFixed(1));
+                // 新增商品，购物车不能为全选
+                Cart.checkAllFlag = false;
                 return;
             }
+
+            // 如果商品已存在并且库存足够，数量加1
             var alreadyGoods = Cart.cart[alreadyIndex];
             var num = alreadyGoods.quantity,
                 stock = alreadyGoods.stock;
-            // 如果商品已存在并且库存足够，数量加1
+
             if (num < stock) {
                 Cart.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
                 Cart.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
@@ -231,6 +236,7 @@ var Cart = new Vue({
     el: '#page-cart',
     data: {
         checkAllFlag: false,
+        selectedNum: 0,
         cart: [{
             id: 1001,
             name: 'Beats EP头戴式耳机',
@@ -240,7 +246,6 @@ var Cart = new Vue({
             subtotal: 558,
             stock: 128,
             sales: 1872,
-            checked: true,
             img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
         }]
     },
@@ -269,11 +274,41 @@ var Cart = new Vue({
          * @param {Object} item 商品对象
          */
         selectGoods: function(item) {
+            // 当前商品无checked属性则添加，否则checked取反
             if (typeof item.checked === 'undefined') {
-                this.$set(item, 'checked', true)
+                ++this.selectedNum;
+                this.$set(item, 'checked', true);
             } else {
-                item.checked = !item.checked
+                item.checked = !item.checked;
+                item.checked ? ++this.selectedNum : --this.selectedNum;
+
             }
+
+            // 设置全选
+            this.selectedNum === this.cart.length ? this.checkAllFlag = true : this.checkAllFlag = false;
+        },
+
+        /**
+         * @method 全选
+         */
+        checkAll: function() {
+            var self = this;
+            this.checkAllFlag = !this.checkAllFlag;
+
+            this.cart.forEach(function(item) {
+                if (self.checkAllFlag) {
+                    // all checked true
+                    typeof item.checked === 'undefined' ?
+                        self.$set(item, 'checked', true) :
+                        item.checked = true;
+
+                    self.selectedNum = self.cart.length;
+                } else {
+                    // all checked false
+                    item.checked = false;
+                    self.selectedNum = 0;
+                }
+            });
         }
 
     },
