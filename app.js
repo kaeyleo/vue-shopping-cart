@@ -205,6 +205,19 @@ new Vue({
             // 如果存在，数量加1
             this.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
             this.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
+        },
+        // 修改单品数量 add/sub
+        changeQty: function(isAdd, index) {
+            var num = this.cart[index].quantity,
+                stock = this.cart[index].stock;
+
+            if (isAdd && num < stock) {
+                this.$set(this.cart[index], 'quantity', ++this.cart[index].quantity);
+            } else if (!isAdd && num > 1) {
+                this.$set(this.cart[index], 'quantity', --this.cart[index].quantity);
+            }
+
+            this.$set(this.cart[index], 'subtotal', (this.cart[index].price * this.cart[index].quantity).toFixed(1));
         }
     },
     computed: {
