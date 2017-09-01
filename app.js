@@ -210,12 +210,14 @@ var List = new Vue({
             // 如果不存在则添加
             if (alreadyIndex === -1) {
                 var cartIndex = Cart.cart.length;
-                // 购物车商品初始化数量为1
+                // 添加新的商品，并初始化其数量、价格、被选中状态
                 Cart.cart.push(goods);
                 Cart.$set(Cart.cart[cartIndex], 'quantity', 1);
                 Cart.$set(Cart.cart[cartIndex], 'subtotal', goods.price.toFixed(1));
+                Cart.$set(Cart.cart[cartIndex], 'checked', false);
                 // 新增商品，购物车不能为全选
                 Cart.checkAllFlag = false;
+                console.log(Cart.cart);
                 return;
             }
 
@@ -228,6 +230,7 @@ var List = new Vue({
                 Cart.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
                 Cart.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
             }
+            console.log(Cart.cart);
         }
     }
 });
@@ -274,18 +277,13 @@ var Cart = new Vue({
          * @param {Object} item 商品对象
          */
         selectGoods: function(item) {
-            // 当前商品无checked属性则添加，否则checked取反
-            if (typeof item.checked === 'undefined') {
-                ++this.selectedNum;
-                this.$set(item, 'checked', true);
-            } else {
-                item.checked = !item.checked;
-                item.checked ? ++this.selectedNum : --this.selectedNum;
-
-            }
-
+            // 状态值取反，并根据状态值对selectedNum进行加减
+            item.checked = !item.checked;
+            item.checked ? ++this.selectedNum : --this.selectedNum;
             // 设置全选
-            this.selectedNum === this.cart.length ? this.checkAllFlag = true : this.checkAllFlag = false;
+            this.selectedNum === this.cart.length ?
+                this.checkAllFlag = true :
+                this.checkAllFlag = false
         },
 
         /**
@@ -297,14 +295,11 @@ var Cart = new Vue({
 
             this.cart.forEach(function(item) {
                 if (self.checkAllFlag) {
-                    // all checked true
-                    typeof item.checked === 'undefined' ?
-                        self.$set(item, 'checked', true) :
-                        item.checked = true;
-
+                    // 全选
+                    item.checked = true;
                     self.selectedNum = self.cart.length;
                 } else {
-                    // all checked false
+                    // 取消全选
                     item.checked = false;
                     self.selectedNum = 0;
                 }
