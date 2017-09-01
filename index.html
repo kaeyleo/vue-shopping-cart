@@ -9,8 +9,8 @@
 </head>
 
 <body>
-    <div class="g-panel" id="app">
-        <div class="device">
+    <div class="g-panel">
+        <div class="device" id="page-list">
             <header><span class="header-title">商品列表</span></header>
             <div class="page">
                 <div class="tab-wrap">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="device">
+        <div class="device" id="page-cart">
             <header>
                 <span class="header-title">购物清单</span>
                 <span class="header-edit">编辑</span>
@@ -94,7 +94,7 @@
                     </div>
                     <span>全选</span>
                 </div>
-                <div class="buy-btn">去结算(3)</div>
+                <div class="buy-btn">去结算({{ cart.length }})</div>
                 <div class="total">合计：<span>¥<b>{{ totalPrice }}</b></span></div>
             </div>
         </div>
