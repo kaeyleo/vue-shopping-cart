@@ -303,7 +303,7 @@ header {
     margin-left: 4px;
 }
 
-.buy-btn {
+.action-btn {
     float: right;
     width: 120px;
     height: 100%;
@@ -311,8 +311,16 @@ header {
     text-align: center;
     font-weight: 300;
     line-height: 52px;
-    background-color: #7A45E5;
     cursor: pointer;
+}
+
+.buy-btn {
+    background-color: #7A45E5;
+}
+
+.del-btn {
+    display: none;
+    background-color: #FF4069;
 }
 
 .del-box .total {
@@ -320,5 +328,9 @@ header {
 }
 
 .del-box .buy-btn {
-    background-color: #FF4069;
+    display: none;
+}
+
+.del-box .del-btn {
+    display: block;
 }
