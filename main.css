@@ -114,17 +114,17 @@ header {
     display: inline-block;
     width: 8px;
     height: 14px;
-    background: url('http://ov52d8mm7.bkt.clouddn.com/order-arrow-default.png') no-repeat;
+    background: url('img/arrow-default.png') no-repeat;
     background-size: 8px 14px;
 }
 
 .filter-active.price-up:after {
-    background: url('http://ov52d8mm7.bkt.clouddn.com/order-arrow-down.png') no-repeat;
+    background: url('img/arrow-down.png') no-repeat;
     background-size: 8px 14px;
 }
 
 .filter-active.price-down:after {
-    background: url('http://ov52d8mm7.bkt.clouddn.com/order-arrow-up.png') no-repeat;
+    background: url('img/arrow-up.png') no-repeat;
     background-size: 8px 14px;
 }
 
