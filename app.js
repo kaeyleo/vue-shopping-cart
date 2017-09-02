@@ -108,7 +108,7 @@ var List = new Vue({
         }],
         list: []
     },
-    created: function() {
+    created: function () {
         this.setList()
     },
     methods: {
@@ -116,12 +116,12 @@ var List = new Vue({
         /**
          * @method 设置商品列表
          */
-        setList: function() {
+        setList: function () {
             var self = this;
-            this.list = this.goods.filter(function(el) {
-                return self.cate_index !== 0 ?
-                    el.type === self.cate_index :
-                    el
+            this.list = this.goods.filter(function (item) {
+                return self.cate_index !== 0
+                    ? item.type === self.cate_index 
+                    : item
             });
         },
 
@@ -129,7 +129,7 @@ var List = new Vue({
          * @method 切换分类
          * @param {Number} index 需要切换类目的数组下标
          */
-        toggleCate: function(index) {
+        toggleCate: function (index) {
             this.cate_index = index;
             // 分类操作
             this.setList();
@@ -147,7 +147,7 @@ var List = new Vue({
          * @param {String} prop 属性名
          * @param {String} type 排序方法 (desc: 降序, asc: 升序)
          */
-        compare: function(prop, type) {
+        compare: function (prop, type) {
             type = type || 'desc';
 
             var flag1, flag2;
@@ -159,9 +159,10 @@ var List = new Vue({
                 flag2 = -1;
             }
 
-            return function(obj1, obj2) {
+            return function (obj1, obj2) {
                 var val1 = obj1[prop],
                     val2 = obj2[prop];
+
                 if (val2 < val1) {
                     return flag1;
                 } else if (val2 > val1) {
@@ -175,14 +176,14 @@ var List = new Vue({
         /**
          * @method 按销量排序
          */
-        sortSales: function() {
+        sortSales: function () {
             this.list.sort(this.compare('sales'));
         },
 
         /**
          * @method 按价格排序
          */
-        sortPrice: function() {
+        sortPrice: function () {
             var type = this.price_isAsc ? 'desc' : 'asc';
             this.list.sort(this.compare('price', type));
             this.price_isAsc = !this.price_isAsc;
@@ -190,8 +191,9 @@ var List = new Vue({
 
         /**
          * @method 排序调度器
+         * @param {String} method 方法名
          */
-        sortBy: function(method) {
+        sortBy: function (method) {
             this.filter_index = this.sortMethods.findIndex(function(item) {
                 return item.method === method;
             });
@@ -204,8 +206,8 @@ var List = new Vue({
          * @method 添加到购物车
          * @param {Object} goods 商品
          */
-        addToCart: function(goods) {
-            var alreadyIndex = Cart.cart.findIndex(function(item, index) {
+        addToCart: function (goods) {
+            var alreadyIndex = Cart.cart.findIndex(function (item, index) {
                 return item.id === goods.id;
             });
 
@@ -261,7 +263,7 @@ var Cart = new Vue({
          * @param {Boolean} isAdd 是否增加
          * @param {Number} index 商品下标
          */
-        changeQty: function(isAdd, item) {
+        changeQty: function (isAdd, item) {
             var num = item.quantity,
                 stock = item.stock;
 
@@ -278,24 +280,24 @@ var Cart = new Vue({
          * @method 选择商品
          * @param {Object} item 商品对象
          */
-        selectGoods: function(item) {
+        selectGoods: function (item) {
             // 状态值取反，并根据状态值对selectedNum进行加减
             item.checked = !item.checked;
             item.checked ? ++this.selectedNum : --this.selectedNum;
             // 设置全选
-            this.selectedNum === this.cart.length ?
-                this.checkAllFlag = true :
-                this.checkAllFlag = false
+            this.selectedNum === this.cart.length 
+                ? this.checkAllFlag = true 
+                : this.checkAllFlag = false
         },
 
         /**
          * @method 全选
          */
-        checkAll: function() {
+        checkAll: function () {
             var self = this;
             this.checkAllFlag = !this.checkAllFlag;
 
-            this.cart.forEach(function(item) {
+            this.cart.forEach(function (item) {
                 if (self.checkAllFlag) {
                     // 全选
                     item.checked = true;
@@ -341,9 +343,12 @@ var Cart = new Vue({
 
     },
     computed: {
-        totalPrice: function() {
+        /**
+         * @method 已选商品的总额
+         */
+        totalPrice: function () {
             var num = 0;
-            this.cart.forEach(function(item) {
+            this.cart.forEach(function (item) {
                 item.checked && (num += parseFloat(item.subtotal));
             });
             return num;
