@@ -12,6 +12,11 @@ var List = new Vue({
             { id: 4, des: '数码家电' },
             { id: 5, des: '居家百货' }
         ],
+        sortMethods: [
+            { name: '综合排序', method: 'setList' },
+            { name: '销量优先', method: 'sortSales' },
+            { name: '价格', method: 'sortPrice' }
+        ],
         goods: [{
             id: 1001,
             name: 'Beats EP头戴式耳机',
@@ -129,9 +134,10 @@ var List = new Vue({
             // 分类操作
             this.setList();
             // 价格排序状态保持不变
-            (this.filter_index === 2) && (this.price_isAsc = !this.price_isAsc);
+            var filterIndex = this.filter_index;
+            (filterIndex === 2) && (this.price_isAsc = !this.price_isAsc);
             // 商品排序
-            this.sortBy(this.filter_index);
+            this.sortBy(this.sortMethods[filterIndex].method);
         },
 
         /**
@@ -142,18 +148,18 @@ var List = new Vue({
          * @param {String} type 排序方法 (desc: 降序, asc: 升序)
          */
         compare: function(prop, type) {
+            type = type || 'desc';
+
+            var flag1, flag2;
+            if (type === 'desc') {
+                flag1 = -1;
+                flag2 = 1;
+            } else if (type === 'asc') {
+                flag1 = 1;
+                flag2 = -1;
+            }
+
             return function(obj1, obj2) {
-                type = type || 'desc';
-
-                var flag1, flag2;
-                if (type === 'desc') {
-                    flag1 = -1;
-                    flag2 = 1;
-                } else if (type === 'asc') {
-                    flag1 = 1;
-                    flag2 = -1;
-                }
-
                 var val1 = obj1[prop],
                     val2 = obj2[prop];
                 if (val2 < val1) {
@@ -185,17 +191,13 @@ var List = new Vue({
         /**
          * @method 排序调度器
          */
-        sortBy: function(index) {
-            this.filter_index = index;
-            if (index == 0) {
-                this.price_isAsc = false;
-                this.setList();
-            } else if (index == 1) {
-                this.price_isAsc = false;
-                this.sortSales();
-            } else if (index == 2) {
-                this.sortPrice();
-            }
+        sortBy: function(method) {
+            this.filter_index = this.sortMethods.findIndex(function(item) {
+                return item.method === method;
+            });
+            method = method || 'setList';
+            method !== 'sortPrice' && (this.price_isAsc = false);
+            this[method]();
         },
 
         /**
@@ -217,7 +219,6 @@ var List = new Vue({
                 Cart.$set(Cart.cart[cartIndex], 'checked', false);
                 // 新增商品，购物车不能为全选
                 Cart.checkAllFlag = false;
-                console.log(Cart.cart);
                 return;
             }
 
@@ -230,7 +231,6 @@ var List = new Vue({
                 Cart.$set(alreadyGoods, 'quantity', ++alreadyGoods.quantity);
                 Cart.$set(alreadyGoods, 'subtotal', (alreadyGoods.price * alreadyGoods.quantity).toFixed(1));
             }
-            console.log(Cart.cart);
         }
     }
 });
@@ -248,6 +248,7 @@ var Cart = new Vue({
             quantity: 1,
             subtotal: 558,
             stock: 128,
+            checked: false,
             sales: 1872,
             img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
         }]
@@ -304,6 +305,13 @@ var Cart = new Vue({
                     self.selectedNum = 0;
                 }
             });
+        },
+
+        delGoods: function() {
+            var self = this;
+            this.cart.forEach(function(item, index) {
+                item.checked && self.cart.splice(index, 1);
+            })
         }
 
     },

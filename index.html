@@ -19,9 +19,7 @@
                     </ul>
                 </div>
                 <ul class="filter-bar">
-                    <li class="filter-opt" v-bind:class="{ 'filter-active': filter_index === 0 }" @click="sortBy(0)">综合排序</li>
-                    <li class="filter-opt" v-bind:class="{ 'filter-active': filter_index === 1 }" @click="sortBy(1)">销量优先</li>
-                    <li class="filter-opt filter-price" v-bind:class="[filter_index === 2 ? 'filter-active' : '', price_isAsc ? 'price-down' : 'price-up']" @click="sortBy(2)">价格</li>
+                    <li class="filter-opt" v-bind:class="{'filter-active': filter_index === index, 'filter-price': item.method === 'sortPrice', 'price-down': price_isAsc, 'price-up': !price_isAsc}"  v-for="(item, index) in sortMethods" @click="sortBy(item.method)">{{ item.name }}</li>
                 </ul>
                 <ul class="goods-list">
                     <li class="goods-item" v-for="(item, index) in list">
@@ -44,7 +42,7 @@
         <div class="device" id="page-cart">
             <header>
                 <span class="header-title">购物清单</span>
-                <span class="header-edit">编辑</span>
+                <span class="header-edit" @click="delGoods">编辑</span>
             </header>
             <div class="page">
                 <ul class="goods-list cart-list">
@@ -94,7 +92,8 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/vue@2.4.2"></script>
+    <!-- <script src="https://unpkg.com/vue@2.4.2"></script> -->
+    <script src="vue.min.js"></script>
     <script src="app.js"></script>
 </body>
 
