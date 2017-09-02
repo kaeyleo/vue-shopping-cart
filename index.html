@@ -19,7 +19,7 @@
                     </ul>
                 </div>
                 <ul class="filter-bar">
-                    <li class="filter-opt" v-bind:class="{'filter-active': filter_index === index, 'filter-price': item.method === 'sortPrice', 'price-down': price_isAsc, 'price-up': !price_isAsc}"  v-for="(item, index) in sortMethods" @click="sortBy(item.method)">{{ item.name }}</li>
+                    <li class="filter-opt" v-bind:class="{'filter-active': filter_index === index, 'filter-price': item.method === 'sortPrice', 'price-down': price_isAsc, 'price-up': !price_isAsc}" v-for="(item, index) in sortMethods" @click="sortBy(item.method)">{{ item.name }}</li>
                 </ul>
                 <ul class="goods-list">
                     <li class="goods-item" v-for="(item, index) in list">
@@ -42,7 +42,10 @@
         <div class="device" id="page-cart">
             <header>
                 <span class="header-title">购物清单</span>
-                <span class="header-edit" @click="delGoods">编辑</span>
+                <span class="header-edit" @click="toggleDelBtn">
+                    <span v-show="!delFlag">编辑</span>
+                    <span v-show="delFlag">完成</span>
+                </span>
             </header>
             <div class="page">
                 <ul class="goods-list cart-list">
@@ -73,7 +76,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="action-bar">
+            <div class="action-bar" v-bind:class="{ 'del-box': delFlag }">
                 <!-- del-box -->
                 <div class="g-selector" @click="checkAll">
                     <div class="item-selector">
@@ -87,7 +90,7 @@
                     <span>全选</span>
                 </div>
                 <div class="action-btn buy-btn">去结算({{ selectedNum }})</div>
-                <div class="action-btn del-btn">删除({{ selectedNum }})</div>
+                <div class="action-btn del-btn" @click="delGoods">删除({{ selectedNum }})</div>
                 <div class="total">合计：<span>¥<b>{{ totalPrice }}</b></span></div>
             </div>
         </div>

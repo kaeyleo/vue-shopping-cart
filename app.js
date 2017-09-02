@@ -240,6 +240,7 @@ var Cart = new Vue({
     data: {
         checkAllFlag: false,
         selectedNum: 0,
+        delFlag: false,
         cart: [{
             id: 1001,
             name: 'Beats EP头戴式耳机',
@@ -307,11 +308,35 @@ var Cart = new Vue({
             });
         },
 
-        delGoods: function() {
-            var self = this;
-            this.cart.forEach(function(item, index) {
-                item.checked && self.cart.splice(index, 1);
-            })
+        /**
+         * @method 切换删除按钮
+         */
+        toggleDelBtn: function () {
+            this.delFlag = !this.delFlag;
+        },
+
+        /**
+         * @method 删除商品
+         */
+        delGoods: function () {
+            /**
+             * !提示：
+             * 每次遍历删除数组元素时，会减少数组长度，所以不能缓存length
+             * 也不能用forEach方法，因为它会自动缓存数组的长度
+             * 这里还可以用filter
+             */
+            var cart = this.cart;
+            this.cart = cart.filter(function (item) {
+                return !item.checked
+            });
+            // for (var i = 0; i < cart.length; i++) {
+            //     cart[i].checked && cart.splice(i--, 1);
+            // };
+
+            // 重置 被选商品数量、全选状态、删除状态
+            this.selectedNum = 0;
+            this.checkAllFlag = false;
+            this.delFlag = !this.delFlag;
         }
 
     },
