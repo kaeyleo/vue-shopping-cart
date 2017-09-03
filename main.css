@@ -147,13 +147,31 @@ header {
 }
 
 .goods-img {
+    position: relative;
     margin-right: 4%;
     display: block;
     width: 16%;
 }
 
 .goods-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+}
+
+.goods-item .flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    background-color: #FC5951;
+    border-radius: 50%;
 }
 
 .goods-info {

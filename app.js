@@ -40,6 +40,7 @@ var List = new Vue({
             type: 5,
             stock: 2,
             sales: 351,
+            ishot: true,
             img: 'http://gw.alicdn.com/tps/TB19OfQRXXXXXbmXXXXL6TaGpXX_760x760q90s150.jpg_.webp'
         }, {
             id: 1004,
@@ -80,6 +81,7 @@ var List = new Vue({
             type: 2,
             stock: 18,
             sales: 69,
+            ishot: true,
             img: 'http://gw.alicdn.com/tps/LB1HL0mQVXXXXbzXVXXXXXXXXXX.png'
         }, {
             id: 1009,
@@ -96,6 +98,7 @@ var List = new Vue({
             type: 3,
             stock: 353,
             sales: 3041,
+            ishot: true,
             img: 'https://m.360buyimg.com/mobilecms/s357x357_jfs/t3169/228/5426689121/95568/d463e211/586dbf56N37fcd503.jpg!q50.jpg'
         }, {
             id: 1011,

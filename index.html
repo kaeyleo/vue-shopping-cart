@@ -25,6 +25,7 @@
                     <li class="goods-item" v-for="(item, index) in list">
                         <div class="goods-img">
                             <img v-bind:src="item.img" v-bind:alt="item.name">
+                            <div class="flag" v-show="item.ishot">热</div>        
                         </div>
                         <div class="goods-info">
                             <p class="goods-title">{{ item.name }}</p>
