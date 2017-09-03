@@ -223,6 +223,13 @@ header {
     overflow: hidden;
 }
 
+.empty-states {
+    padding-top: 60px;
+    font-size: 18px;
+    color: #AEB0B7;
+    text-align: center;
+}
+
 .cart-list .goods-info {
     width: 68%;
 }

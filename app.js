@@ -246,18 +246,19 @@ var Cart = new Vue({
         checkAllFlag: false,
         selectedNum: 0,
         delFlag: false,
-        cart: [{
-            id: 1001,
-            name: 'Beats EP头戴式耳机',
-            price: 558,
-            type: 4,
-            quantity: 1,
-            subtotal: 558,
-            stock: 128,
-            checked: false,
-            sales: 1872,
-            img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
-        }]
+        // cart: [{
+        //     id: 1001,
+        //     name: 'Beats EP头戴式耳机',
+        //     price: 558,
+        //     type: 4,
+        //     quantity: 1,
+        //     subtotal: 558,
+        //     stock: 128,
+        //     checked: false,
+        //     sales: 1872,
+        //     img: 'http://img11.360buyimg.com/n1/s528x528_jfs/t3109/194/2435573156/46587/e0e867ac/57e10978N87220944.jpg!q70.jpg'
+        // }]
+        cart: []
     },
     methods: {
 
