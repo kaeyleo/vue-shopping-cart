@@ -138,7 +138,7 @@ var List = new Vue({
             this.setList();
             // 价格排序状态保持不变
             var filterIndex = this.filter_index;
-            (filterIndex === 2) && (this.price_isAsc = !this.price_isAsc);
+            filterIndex === 2;
             // 商品排序
             this.sortBy(this.sortMethods[filterIndex].method);
         },
@@ -189,7 +189,7 @@ var List = new Vue({
         sortPrice: function () {
             var type = this.price_isAsc ? 'desc' : 'asc';
             this.list.sort(this.compare('price', type));
-            this.price_isAsc = !this.price_isAsc;
+            
         },
 
         /**
